@@ -43,9 +43,9 @@ const Nav = () => (
 const Hero = () => (
   <header id="top" className="glow">
     <div className="mx-auto max-w-5xl px-6 pb-16 pt-24 sm:pt-32">
-      <p className="reveal font-mono text-sm text-accent">{profile.name} · {profile.location}</p>
+      <p className="reveal font-mono text-sm text-accent">Software Engineer · {profile.location}</p>
       <h1 className="reveal mt-4 max-w-3xl font-display text-5xl font-semibold leading-[1.05] tracking-tight text-snow sm:text-6xl">
-        {profile.headline}
+        {profile.name}
       </h1>
       <p className="reveal mt-6 max-w-2xl text-lg leading-relaxed text-fog">{profile.specialty}</p>
       <div className="reveal mt-8 flex flex-wrap gap-3 text-sm">

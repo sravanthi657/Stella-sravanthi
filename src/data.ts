@@ -171,8 +171,8 @@ export const code = [
 
 export const profile = {
   name: 'Stella Sravanthi',
-  headline: 'Frontend engineer for communication products.',
-  specialty: 'React, TypeScript, design systems, and data-heavy product UI, with Python, Go, PostgreSQL, and AWS behind them.',
+  headline: 'Stella Sravanthi',
+  specialty: 'I build communication products at Plivo: React, TypeScript, design systems, and data-heavy product UI, with Python, Go, PostgreSQL, and AWS behind them.',
   location: 'Bengaluru, India',
   email: 'stellasravanthidevarakonda@gmail.com',
   github: 'https://github.com/sravanthi657',
