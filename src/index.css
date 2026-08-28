@@ -28,3 +28,47 @@ body { background: var(--color-ink); color: var(--color-snow); }
     radial-gradient(40% 40% at 90% 10%, rgba(99, 102, 241, .12), transparent 60%);
 }
 :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; border-radius: 4px; }
+
+/* ---- cover scene ---- */
+.cover { background: radial-gradient(120% 80% at 50% 40%, #16202f 0%, #0b0f19 60%, #070a11 100%); }
+.cursor { animation: blink 1.1s steps(2) infinite; }
+@keyframes blink { to { opacity: 0; } }
+
+.orb {
+  position: absolute; left: 57%; top: 26%; width: 46px; height: 46px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ffd9c2, #ff8a5b 55%, #e2603a);
+  box-shadow: 0 0 60px 20px rgba(255, 138, 91, .35), 0 0 160px 60px rgba(255, 138, 91, .12);
+  animation: drift 9s ease-in-out infinite alternate;
+}
+.ring-dot {
+  position: absolute; left: 66%; top: 41%; width: 22px; height: 22px; border-radius: 50%;
+  border: 1px solid rgba(94, 234, 212, .7);
+}
+.ring-dot::after {
+  content: ""; position: absolute; inset: 7px; border-radius: 50%; background: #5eead4;
+}
+
+.cube { position: absolute; transform-style: preserve-3d; }
+.cube-face {
+  position: absolute; inset: 0;
+  background: linear-gradient(160deg, #2a3446 0%, #141b28 55%, #0d121c 100%);
+  border: 1px solid rgba(255,255,255,.04);
+  box-shadow: inset 0 0 40px rgba(0,0,0,.35);
+}
+.cube-face:nth-child(5) { background: linear-gradient(160deg, #ffb17a 0%, #b8623c 45%, #2a1d17 100%); }
+.cube-face:nth-child(1) { background: linear-gradient(160deg, #3a4660 0%, #1a2233 60%, #0d121c 100%); }
+
+.cube-a { left: 36%; top: 22%; animation: spin-a 26s linear infinite; }
+.cube-b { left: 30%; top: 12%; animation: spin-b 32s linear infinite reverse; opacity: .85; }
+.cube-c { left: 60%; top: 62%; animation: spin-c 22s linear infinite; opacity: .9; }
+
+@keyframes spin-a { from { transform: rotateX(-24deg) rotateY(0deg); } to { transform: rotateX(-24deg) rotateY(360deg); } }
+@keyframes spin-b { from { transform: rotateX(30deg) rotateZ(10deg) rotateY(0deg); } to { transform: rotateX(30deg) rotateZ(10deg) rotateY(360deg); } }
+@keyframes spin-c { from { transform: rotateX(-40deg) rotateY(0deg); } to { transform: rotateX(-40deg) rotateY(360deg); } }
+@keyframes drift { from { transform: translateY(0); } to { transform: translateY(-18px); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .cube, .orb, .cursor { animation: none; }
+}
+
+.scene { perspective: 1400px; perspective-origin: 50% 35%; }
