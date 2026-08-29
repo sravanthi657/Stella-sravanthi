@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { caseStudies, code, experience, notes, profile, type CaseStudy } from './data'
-import { Cover } from './Cover'
+import { Cover, Nav } from './Cover'
 
 const useReveal = () => {
   useEffect(() => {
@@ -116,19 +116,9 @@ const App = () => {
   useReveal()
   return (
     <>
+      <Nav />
       <main className="font-sans antialiased">
         <Cover />
-        <section className="mx-auto max-w-5xl px-6 pt-20">
-          <p className="reveal max-w-2xl text-lg leading-relaxed text-fog">{profile.specialty}</p>
-          <dl className="reveal mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-4">
-            {profile.stats.map((s) => (
-              <div key={s.label} className="bg-panel p-5">
-                <dt className="font-display text-3xl font-semibold text-snow">{s.value}</dt>
-                <dd className="mt-1 text-xs leading-snug text-fog">{s.label}</dd>
-              </div>
-            ))}
-          </dl>
-        </section>
 
         <Section id="work" kicker="Selected work" title="Three things I built at Plivo">
           {caseStudies.map((s, idx) => <Study key={s.id} study={s} flip={idx % 2 === 1} />)}
