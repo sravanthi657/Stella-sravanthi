@@ -42,8 +42,8 @@ export const caseStudies: CaseStudy[] = [
       'The playground is the moment customers validate an agent before launch. NAT detection turned a class of "it does not work" tickets into a self-service message.',
     stack: ['React', 'TypeScript', 'TanStack Form', 'Zod', 'SSE', 'WebRTC', 'React Flow', 'OpenAI API'],
     shots: [
-      { src: '/shots/voice-config-tab.png', caption: 'Voice configuration: TTS model tradeoff, speed, pronunciation' },
-      { src: '/shots/node-config-sidebar.png', caption: 'Per-node configuration rendered from field config' },
+      { src: 'shots/voice-config-tab.png', caption: 'Voice configuration: TTS model tradeoff, speed, pronunciation' },
+      { src: 'shots/node-config-sidebar.png', caption: 'Per-node configuration rendered from field config' },
     ],
   },
   {
@@ -71,10 +71,10 @@ export const caseStudies: CaseStudy[] = [
       'Legacy customers now live on the new console. Along the way a P1 memory incident traced to an unpaginated dropdown fetching 2,752 records was fixed with server-side PostgreSQL search, and invoices hidden by a missing pager became reachable again.',
     stack: ['React', 'TypeScript', 'TanStack Query', 'Zod', 'PostgreSQL', 'Go gateway'],
     shots: [
-      { src: '/shots/create-trunk-platforms.png', caption: 'Platform-aware SIP trunk creation' },
-      { src: '/shots/numbers-list.png', caption: 'Phone numbers management' },
-      { src: '/shots/invoices.png', caption: 'Invoices, with the pagination that was missing' },
-      { src: '/shots/usage-overview.png', caption: 'Usage and spend overview' },
+      { src: 'shots/create-trunk-platforms.png', caption: 'Platform-aware SIP trunk creation' },
+      { src: 'shots/numbers-list.png', caption: 'Phone numbers management' },
+      { src: 'shots/invoices.png', caption: 'Invoices, with the pagination that was missing' },
+      { src: 'shots/usage-overview.png', caption: 'Usage and spend overview' },
     ],
   },
   {
@@ -102,8 +102,8 @@ export const caseStudies: CaseStudy[] = [
       'This flow gates WhatsApp for enterprise customers. The rollback and sync work converted several "stuck forever" onboarding states into retryable ones.',
     stack: ['React', 'TypeScript', 'Python', 'Flask', 'Meta Cloud API'],
     shots: [
-      { src: '/shots/wa-numbers.png', caption: 'WhatsApp numbers with connection and quality status' },
-      { src: '/shots/wa-templates-list.png', caption: 'Message template management' },
+      { src: 'shots/wa-numbers.png', caption: 'WhatsApp numbers with connection and quality status' },
+      { src: 'shots/wa-templates-list.png', caption: 'Message template management' },
     ],
   },
 ]
@@ -177,7 +177,7 @@ export const profile = {
   email: 'stellasravanthidevarakonda@gmail.com',
   github: 'https://github.com/sravanthi657',
   linkedin: 'https://www.linkedin.com/in/stella-sravanthi-devarakonda',
-  resume: '/Stella_Sravanthi_Resume.pdf',
+  resume: 'Stella_Sravanthi_Resume.pdf',
   stats: [
     { value: '3+', label: 'years at Plivo, intern to SDE' },
     { value: '50+', label: 'design system components built or maintained' },
