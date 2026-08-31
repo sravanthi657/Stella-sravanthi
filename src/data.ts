@@ -1,4 +1,6 @@
 export interface Shot { src: string; caption: string }
+export interface Decision { title: string; body: string }
+export interface Tradeoff { chose: string; over: string; why: string }
 
 export interface CaseStudy {
   id: string
@@ -7,8 +9,8 @@ export interface CaseStudy {
   summary: string
   problem: string
   role: string
-  decisions: string[]
-  tradeoffs: string[]
+  decisions: Decision[]
+  tradeoffs: Tradeoff[]
   quality: string
   result: string
   stack: string[]
@@ -26,18 +28,17 @@ export const caseStudies: CaseStudy[] = [
     role:
       'Frontend engineer on a small pod. I built the agent configuration surfaces (voice, transcription, interruption handling, callback auth) and the live testing playground end to end, and shipped fixes across the flow builder the studio sits on.',
     decisions: [
-      'Config-driven forms: every settings tab is declared as field config (Zod rule, visibility predicate, cross-field reactions) rendered by one generic form layer, so a new setting is data, not a new component.',
-      'Three independently mounted forms write one backend payload. The save path field-picks each form\'s slice so an unvisited tab can never clobber another tab\'s edits with defaults.',
-      'Playground events stream over Server-Sent Events, hand-rolled on fetch and ReadableStream because EventSource cannot send auth headers. Reconnect uses exponential backoff and resumes via Last-Event-ID, so a refresh keeps the transcript.',
-      'The transcript reducer keys execution history by run id, not node id, because loops execute the same node twice and chunks can arrive before their parent event.',
-      'NAT detection before a test call: a throwaway RTCPeerConnection against a STUN server, 2 second timeout, fail closed. A symmetric NAT gets a clear "your network blocks voice" popover instead of a silent dead call.',
+      { title: 'Config-driven forms', body: 'Every settings tab is field config (Zod rule, visibility predicate, cross-field reactions) rendered by one generic form layer. A new setting is data, not a component.' },
+      { title: 'One payload, three forms', body: 'Three independently mounted forms write one backend object. The save path field-picks each form\'s slice, so an unvisited tab can never clobber another tab\'s edits.' },
+      { title: 'Resumable SSE streaming', body: 'Hand-rolled on fetch and ReadableStream because EventSource cannot send auth headers. Backoff reconnect resumes via Last-Event-ID, so a refresh keeps the transcript.' },
+      { title: 'Run-keyed transcript reducer', body: 'Execution history is keyed by run id, not node id: loops execute the same node twice and chunks can arrive before their parent event.' },
+      { title: 'Fail-closed NAT probe', body: 'A throwaway RTCPeerConnection against STUN, 2 second timeout. A symmetric NAT gets a clear "your network blocks voice" popover instead of a silent dead call.' },
     ],
     tradeoffs: [
-      'WebRTC through the real telephony path instead of a simulator: heavier to build, but a test that passes on a fake and fails in production is worse than no test.',
-      'SSE over WebSocket: the feed is one-directional and needs resumability. Messages the user sends go over plain POSTs.',
+      { chose: 'WebRTC through real telephony', over: 'a call simulator', why: 'A test that passes on a fake and fails in production is worse than no test.' },
+      { chose: 'SSE', over: 'WebSocket', why: 'The feed is one-directional and needs resumability. User messages go over plain POSTs.' },
     ],
-    quality:
-      'Reducer and stream logic live in pure functions with unit tests (out-of-order chunks, replayed run announcements, resume offsets). UI behaviour is covered with component tests on the real stores rather than mocked modules.',
+    quality: 'Stream and reducer logic live in pure functions with unit tests; UI behaviour is tested on real stores, not mocked modules.',
     result:
       'The playground is the moment customers validate an agent before launch. NAT detection turned a class of "it does not work" tickets into a self-service message.',
     stack: ['React', 'TypeScript', 'TanStack Form', 'Zod', 'SSE', 'WebRTC', 'React Flow', 'OpenAI API'],
@@ -56,17 +57,16 @@ export const caseStudies: CaseStudy[] = [
     role:
       'I rebuilt phone numbers (search, buy, port-in wizard), SIP trunking, billing and invoices, and pricing end to end, and owned the production issues that surfaced as customers moved.',
     decisions: [
-      'SIP trunk creation is platform-aware: LiveKit, Retell, Vapi, ElevenLabs, and xAI each get their own URI template, transport rules, and managed IP allow-list from one pure config module, so the form cannot offer an invalid combination.',
-      'Region drives configuration, not the user: ElevenLabs resolves to its India residency host for India accounts, and platforms without India servers are not offered there.',
-      'Pagination is treated as a contract, not an optimisation. Pagers key off hasNext, never total_count, after finding APIs that return zero for it.',
-      'The port-in wizard surfaces a form-level blocker summary, because a multi-step form whose submit button lives on step three can otherwise fail silently on a step one field.',
+      { title: 'Platform-aware trunk config', body: 'LiveKit, Retell, Vapi, ElevenLabs and xAI each get their own URI template, transports and managed IP allow-list from one pure config module. Invalid combinations cannot be offered.' },
+      { title: 'Region drives configuration', body: 'ElevenLabs resolves to its India residency host for India accounts, and platforms without India servers are not offered there.' },
+      { title: 'Pagination as a contract', body: 'Pagers key off hasNext, never total_count, after finding APIs that return zero for it. Selects resolve out-of-page values explicitly.' },
+      { title: 'Wizard blocker summary', body: 'A multi-step form whose submit lives on step three can fail silently on a step one field, so the port-in wizard surfaces a form-level blocker summary.' },
     ],
     tradeoffs: [
-      'Recording the chosen SIP platform server-side instead of inferring it from URI shape: one more API, but inference could not distinguish two platforms even in principle and would have produced a UI that lies.',
-      'Grandfathering plan gates to new signups only. Taking a screen away from an existing account is a breaking change, so gates key off org creation date and fail open on missing data.',
+      { chose: 'Recording the platform server-side', over: 'inferring it from URI shape', why: 'Inference could not distinguish two platforms even in principle and would produce a UI that lies.' },
+      { chose: 'Grandfathering plan gates', over: 'gating every account at once', why: 'Taking a screen away from an existing account is a breaking change. Gates key off org creation date and fail open.' },
     ],
-    quality:
-      'Pure config and payload builders are unit tested and mutation checked. Every list and select is verified against real page counts, and UI changes ship with screenshots in the PR.',
+    quality: 'Pure config and payload builders are unit tested and mutation checked; lists are verified against real page counts.',
     result:
       'Legacy customers now live on the new console. Along the way a P1 memory incident traced to an unpaginated dropdown fetching 2,752 records was fixed with server-side PostgreSQL search, and invoices hidden by a missing pager became reachable again.',
     stack: ['React', 'TypeScript', 'TanStack Query', 'Zod', 'PostgreSQL', 'Go gateway'],
@@ -87,17 +87,16 @@ export const caseStudies: CaseStudy[] = [
     role:
       'I own this module: the onboarding wizard, number sync and disconnect, WABA to account mapping, and template management on the frontend, plus the orchestration endpoints in the Flask backend. Around 40 merged PRs across both.',
     decisions: [
-      'Registration with selective rollback: if webhook registration fails the just-created number row is deleted so a retry starts clean, and a Plivo application created in the same call is removed, but a pre-existing one is never touched.',
-      'Reconciliation over trust: numbers registered inside Meta\'s popup sometimes never call back, so the numbers screen syncs on mount and offers a manual sync.',
-      'Template payloads are built client-side from a typed form: authentication templates with one-tap and zero-tap OTP buttons, and dynamic URL buttons that append the variable exactly the way Meta validates it.',
-      'Errors crossing three hops are classified into actionable messages ("account already onboarded") instead of a generic failure.',
+      { title: 'Selective rollback', body: 'If webhook registration fails, the just-created number row is deleted so retry starts clean. An application created in the same call is removed; a pre-existing one is never touched.' },
+      { title: 'Reconciliation over trust', body: 'Numbers registered inside Meta\'s popup sometimes never call back, so the numbers screen syncs on mount and offers a manual sync.' },
+      { title: 'Typed template payloads', body: 'Authentication templates with one-tap and zero-tap OTP buttons, and dynamic URL buttons that append the variable exactly the way Meta validates it.' },
+      { title: 'Actionable error mapping', body: 'Errors crossing three hops are classified into messages a user can act on ("account already onboarded") instead of a generic failure.' },
     ],
     tradeoffs: [
-      'The backend stays stateless for WhatsApp state. Duplicating Meta state in our database would guarantee drift, so we only add account context.',
-      'A downstream routing cache was invalidated explicitly on config change, with a 2 second timeout, because the save path can call it four times and a default timeout would stall the user.',
+      { chose: 'A stateless backend for WhatsApp state', over: 'mirroring Meta state in our DB', why: 'A mirror would guarantee drift; we only add account context.' },
+      { chose: 'Explicit cache invalidation, 2s timeout', over: 'waiting out a 24h routing TTL', why: 'The save path can call it four times; a default timeout would stall the user.' },
     ],
-    quality:
-      'Backend orchestration has unit tests for the subaccount auth resolution and cache invalidation paths. Frontend template form logic is covered by config tests for every category branch.',
+    quality: 'Backend orchestration has unit tests for auth resolution and cache invalidation; template form logic is covered per category branch.',
     result:
       'This flow gates WhatsApp for enterprise customers. The rollback and sync work converted several "stuck forever" onboarding states into retryable ones.',
     stack: ['React', 'TypeScript', 'Python', 'Flask', 'Meta Cloud API'],
@@ -163,8 +162,8 @@ export const code = [
   },
   {
     name: 'this site',
-    desc: 'Vite, React, TypeScript, Tailwind. Scroll reveal respects reduced motion; thumbnails are keyboard tabs.',
-    href: 'https://github.com/sravanthi657',
+    desc: 'Vite, React, TypeScript, Tailwind. Scroll reveal respects reduced motion; galleries are keyboard tab lists.',
+    href: 'https://github.com/sravanthi657/Stella-sravanthi',
     tags: ['React', 'Tailwind'],
   },
 ]

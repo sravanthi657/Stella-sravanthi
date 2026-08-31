@@ -96,18 +96,30 @@ const Study = ({ study, flip }: { study: CaseStudy; flip: boolean }) => (
         </div>
       </div>
     </div>
-    <div className="mt-10 grid gap-8 md:grid-cols-3">
-      <Block label="Frontend decisions">
-        <ul className="space-y-3">
-          {study.decisions.map((d) => <li key={d} className="border-l-2 border-line pl-3">{d}</li>)}
-        </ul>
-      </Block>
-      <Block label="Tradeoffs">
-        <ul className="space-y-3">
-          {study.tradeoffs.map((t) => <li key={t} className="border-l-2 border-line pl-3">{t}</li>)}
-        </ul>
-      </Block>
-      <Block label="How it was verified">{study.quality}</Block>
+    <div className="mt-10">
+      <h4 className="font-mono text-xs uppercase tracking-[0.18em] text-accent">Engineering decisions</h4>
+      <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        {study.decisions.map((d, idx) => (
+          <div key={d.title} className="rounded-xl border border-line bg-panel p-4">
+            <p className="font-mono text-[11px] text-accent">{String(idx + 1).padStart(2, '0')}</p>
+            <p className="mt-1 font-display text-[15px] font-semibold text-snow">{d.title}</p>
+            <p className="mt-1.5 text-sm leading-relaxed text-fog">{d.body}</p>
+          </div>
+        ))}
+        {study.tradeoffs.map((t) => (
+          <div key={t.chose} className="rounded-xl border border-dashed border-line bg-transparent p-4">
+            <p className="font-mono text-[11px] text-fog">⇄ tradeoff</p>
+            <p className="mt-1 text-[15px] font-medium text-snow">
+              {t.chose} <span className="text-fog">over</span> {t.over}
+            </p>
+            <p className="mt-1.5 text-sm leading-relaxed text-fog">{t.why}</p>
+          </div>
+        ))}
+      </div>
+      <p className="mt-4 rounded-lg border border-line bg-panel/60 px-4 py-3 text-sm text-fog">
+        <span className="font-mono text-xs uppercase tracking-widest text-accent">✓ Verified</span>
+        <span className="ml-3">{study.quality}</span>
+      </p>
     </div>
   </article>
 )
