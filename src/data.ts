@@ -68,7 +68,7 @@ export const caseStudies: CaseStudy[] = [
     ],
     quality: 'Pure config and payload builders are unit tested and mutation checked; lists are verified against real page counts.',
     result:
-      'Legacy customers now live on the new console. Along the way a P1 memory incident traced to an unpaginated dropdown fetching 2,752 records was fixed with server-side PostgreSQL search, and invoices hidden by a missing pager became reachable again.',
+      'Legacy customers now live on the new console. Along the way a P1 memory incident traced to an unpaginated dropdown fetching 2,752 records was fixed with server-side PostgreSQL search, invoices hidden by a missing pager became reachable again, and subaccount dropdowns stopped truncating for accounts with tens of thousands of subaccounts.',
     stack: ['React', 'TypeScript', 'TanStack Query', 'Zod', 'PostgreSQL', 'Go gateway'],
     shots: [
       { src: 'shots/create-trunk-platforms.png', caption: 'Platform-aware SIP trunk creation' },
@@ -85,7 +85,7 @@ export const caseStudies: CaseStudy[] = [
     problem:
       'Connecting a number spans four systems (console, our backend, the WhatsApp messaging service, Meta) with no shared transaction. Any step can fail, and Meta\'s popup gives the same empty answer for "user closed it" and "auth failed".',
     role:
-      'I own this module: the onboarding wizard, number sync and disconnect, WABA to account mapping, and template management on the frontend, plus the orchestration endpoints in the Flask backend. Around 40 merged PRs across both.',
+      'I own this module: the onboarding wizard, number sync and disconnect, WABA to account mapping, and template management on the frontend, plus the orchestration endpoints in the Flask backend. 40+ merged PRs across both.',
     decisions: [
       { title: 'Selective rollback', body: 'If webhook registration fails, the just-created number row is deleted so retry starts clean. An application created in the same call is removed; a pre-existing one is never touched.' },
       { title: 'Reconciliation over trust', body: 'Numbers registered inside Meta\'s popup sometimes never call back, so the numbers screen syncs on mount and offers a manual sync.' },
@@ -180,7 +180,7 @@ export const profile = {
   stats: [
     { value: '3+', label: 'years at Plivo, intern to SDE' },
     { value: '50+', label: 'design system components built or maintained' },
-    { value: '200+', label: 'merged PRs across five services' },
+    { value: '447', label: 'merged PRs across 11 repos' },
     { value: '40+', label: 'PRs on the WhatsApp module alone' },
   ],
 }
