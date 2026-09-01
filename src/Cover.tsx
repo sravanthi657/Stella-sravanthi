@@ -24,7 +24,7 @@ const LINES: Tok[][] = [
   [{ t: '  role: ', c: 'text-fog' }, { t: "'Software Engineer'", c: 'text-accent' }, { t: ',', c: 'text-fog' }],
   [{ t: '  builds: ', c: 'text-fog' }, { t: "'communication products'", c: 'text-accent' }, { t: ',', c: 'text-fog' }],
   [{ t: '  stack: ', c: 'text-fog' }, { t: "['React', 'TypeScript', 'Python', 'Go']", c: 'text-accent' }, { t: ',', c: 'text-fog' }],
-  [{ t: '  currently: ', c: 'text-fog' }, { t: "'AI voice agents at Plivo'", c: 'text-accent' }, { t: ',', c: 'text-fog' }],
+  [{ t: '  currently: ', c: 'text-fog' }, { t: "'SIP trunking, toll-free compliance & WhatsApp'", c: 'text-accent' }, { t: ',', c: 'text-fog' }],
   [{ t: '}', c: 'text-fog' }],
   [{ t: '$ ', c: 'text-fog' }, { t: 'open ./work', c: 'text-snow' }],
 ]
